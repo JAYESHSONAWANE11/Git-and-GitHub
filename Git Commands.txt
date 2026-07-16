@@ -1,0 +1,89 @@
+===============================================================================
+                       GIT COMPLETE WORKFLOW CHEAT SHEET
+===============================================================================
+
+PHASE 1: INITIALIZING AND CONFIGURING
+-------------------------------------------------------------------------------
+# Initialize a blank local Git repository inside your current folder
+git init
+git branch -M main ----> renames the branch name 
+git config --global init.defaultBranch main  --> globaly tell and by default whenever we initialize .git branch name will be main not master
+
+
+# Configure your identity (only needs to be done once per computer)
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+git config --global --list  ---> List out the name and mail
+
+
+
+PHASE 2: THE CORE WORKFLOW (ADD, COMMIT, PUSH)
+-------------------------------------------------------------------------------
+# Check what files are modified, staged (green), or unstaged (red)
+git status
+
+# Stage your files to prepare them for a commit
+git add filename.txt      # Stage a specific file
+git add .                 # Stage ALL files and changes in the current folder
+
+# Save your staged changes permanently to your local computer's history
+git commit -m "Add initial files to the project"
+
+# Link your local repository to your remote server (only done once per project)
+git remote add origin https://github.com
+
+# Push your local main branch to the remote server for the first time
+git push -u origin main
+
+# Push subsequent commits after the branch is already linked
+git push
+
+
+PHASE 3: BRANCHING AND REMOTE ALIGNMENT
+-------------------------------------------------------------------------------
+# Create and switch to a brand new local branch
+git checkout -b newbranch
+
+# List your branches to see where you are
+git branch -r             # View only remote branches
+git branch -a             # View both local and remote branches
+
+# Push your new local branch to the remote server for the first time
+git push -u origin newbranch
+
+
+PHASE 4: SYNCING AND MERGING BRANCHES
+-------------------------------------------------------------------------------
+# Fetch the latest history from the server without changing your local files
+git fetch
+
+# Download new changes from the remote server and instantly merge them
+git pull
+
+# Merge changes from 'newbranch' into 'main' (Local First, Remote Second)
+git checkout main         # 1. Switch to the destination branch locally
+git pull origin main      # 2. Make sure local main is updated
+git merge newbranch       # 3. Combine the code locally
+git push origin main      # 4. Upload the combined result to the server
+
+
+PHASE 5: DELETING AND WIPING OUT FILES
+-------------------------------------------------------------------------------
+# Delete a branch completely (Must switch to main first)
+git checkout main
+git branch -d newbranch            # Delete locally
+git push origin --delete newbranch  # Delete from the remote server
+
+# Delete a specific file locally and stage it for remote deletion
+git rm filename.txt
+git commit -m "Remove filename.txt"
+git push
+
+# Fix manual deletion mistakes (Restore files that you deleted via laptop interface)
+git restore .
+
+# Delete ALL files from the remote repository at once
+git rm -r .
+git commit -m "Wipe out all files"
+git push origin main
+===============================================================================
